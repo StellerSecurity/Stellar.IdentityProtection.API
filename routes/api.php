@@ -36,9 +36,12 @@ Route::middleware(['basicAuth'])->group(function () {
 });
 
 
+Route::prefix('v1')->group(function () {
+    Route::controller(\App\Http\Controllers\V1\IdentityController::class)->group(function () {
 
-Route::prefix('identitycontroller')->group(function () {
-    Route::prefix('v1')->group(function () {
-            Route::get('scheduler', 'scheduler');
+    Route::prefix('identitycontroller')->group(function () {
+                Route::get('scheduler', 'scheduler');
+        });
     });
+
 });
