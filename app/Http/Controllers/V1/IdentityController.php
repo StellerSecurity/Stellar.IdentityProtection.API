@@ -46,7 +46,7 @@ class IdentityController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function breached(Request $request)
+    public function breached(Request $request): JsonResponse
     {
 
         $id = $request->input('id');
