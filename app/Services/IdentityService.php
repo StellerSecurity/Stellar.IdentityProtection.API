@@ -26,7 +26,6 @@ class IdentityService
             $response = Http::retry(3)->withHeader('hibp-api-key', env('PWNED_API_KEY'))
                 ->get($this->baseUrl . "v3/breachedaccount/{$email}");
 
-
             $minutes = 60 * 60 * 72; // 72 hours cache.
             Cache::store('file')->put($cache_key, $response->object(), $minutes);
 
