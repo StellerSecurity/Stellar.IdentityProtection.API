@@ -24,7 +24,7 @@ class IdentityController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function add(Request $request)
+    public function add(Request $request): JsonResponse
     {
 
         if($request->input('email') === null) {
@@ -47,7 +47,7 @@ class IdentityController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function breached(Request $request)
+    public function breached(Request $request): JsonResponse
     {
 
         $id = $request->input('id');
@@ -79,7 +79,7 @@ class IdentityController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Request $request)
+    public function update(Request $request): JsonResponse
     {
         $id = $request->input('id');
 
@@ -99,7 +99,8 @@ class IdentityController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function delete(Request $request) {
+    public function delete(Request $request): JsonResponse
+    {
         $id = $request->input('id');
 
         $identityProtection = IdentityProtection::find($id);
@@ -145,7 +146,7 @@ class IdentityController extends Controller
 
             $identityStatus = IdentityStatus::CLEAN->value;
 
-            if(is_array($breached)) {
+            if(count($breached) > 0) {
                 $identityStatus = IdentityStatus::BREACHED->value;
             }
 
