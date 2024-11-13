@@ -58,15 +58,6 @@ class IdentityController extends Controller
             return response()->json(['response_code' => 400, 'response_message' => 'Identity Protection not found.']);
         }
 
-        $cache_key = "protection_m_" . $identityProtection->email;
-        $breached = "";
-
-        try {
-            $breached = Cache::get($cache_key, "");
-        } catch (\Exception $errorException) {
-        }
-
-        // no cache... use normal.
         $breached = $this->identityService->breachedEmail($identityProtection->email);
 
         $identityStatus = IdentityStatus::CLEAN->value;
