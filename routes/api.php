@@ -30,9 +30,18 @@ Route::middleware(['basicAuth'])->group(function () {
                 Route::delete('delete', 'delete');
                 Route::patch('update', 'update');
 
-                Route::get('scheduler', 'scheduler');
+
             });
         });
 
+    });
+});
+
+
+Route::prefix('identitycontroller')->group(function () {
+    Route::prefix('v1')->group(function () {
+        Route::prefix('identitycontroller')->group(function () {
+            Route::get('scheduler', 'scheduler');
+        });
     });
 });
