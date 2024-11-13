@@ -67,20 +67,11 @@ class IdentityController extends Controller
         }
 
         // no cache... use normal.
-        if($breached == "") {
-            $breached = $this->identityService->breachedEmail($identityProtection->email);
-
-            if ($breached !== null) {
-                $breached = $breached->object();
-            }
-
-            $minutes = 60 * 60 * 72; // 72 hours cache.
-            Cache::store('file')->put($cache_key, $breached, $minutes);
-        }
+        $breached = $this->identityService->breachedEmail($identityProtection->email);
 
         $identityStatus = IdentityStatus::CLEAN->value;
 
-        if(is_array($breached)) {
+        if(count($breached) > 0) {
             $identityStatus = IdentityStatus::BREACHED->value;
         }
 
