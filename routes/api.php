@@ -26,6 +26,7 @@ Route::middleware(['basicAuth'])->group(function () {
             Route::controller(\App\Http\Controllers\V1\IdentityController::class)->group(function () {
                 Route::post('add', 'add');
                 Route::get('view', 'view');
+                Route::get('breached', 'breached');
                 Route::delete('delete', 'delete');
                 Route::patch('update', 'update');
             });

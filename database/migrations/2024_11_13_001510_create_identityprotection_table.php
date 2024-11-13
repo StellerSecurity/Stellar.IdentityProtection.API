@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('identityprotection', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('email');
             $table->string('user_id');
-            $table->dateTime('last_check');
+            $table->dateTime('last_check')->default(null)->nullable();
             $table->integer('status')->default(-1);
             $table->timestamps();
         });
