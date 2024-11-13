@@ -29,6 +29,8 @@ Route::middleware(['basicAuth'])->group(function () {
                 Route::get('breached', 'breached');
                 Route::delete('delete', 'delete');
                 Route::patch('update', 'update');
+
+                Route::get('scheduler', 'scheduler');
             });
         });
 
