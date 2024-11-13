@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\IdentityStatus;
 use App\Models\IdentityProtection;
 use App\Services\IdentityService;
+use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -149,6 +150,30 @@ class IdentityController extends Controller
         $identityProtection->response_message = 'OK';
 
         return response()->json($identityProtection);
+    }
+
+    public function scheduler()
+    {
+
+        $identityProtections = IdentityProtection::where('last_check', '<=', Carbon::now()->subDays(7)->toDateTimeString())->take(20)->get();
+
+        foreach($identityProtections as $identityProtection) {
+
+            $breached = $this->identityService->breachedEmail($identityProtection->email);
+
+            $identityStatus = IdentityStatus::CLEAN->value;
+
+            if(is_array($breached)) {
+                $identityStatus = IdentityStatus::BREACHED->value;
+            }
+
+            $identityProtection->status = $identityStatus;
+            $identityProtection->save();
+
+            $identityProtection->last_check = Carbon::now();
+            $identityProtection->save();
+        }
+
     }
 
 }
