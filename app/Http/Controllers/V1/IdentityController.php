@@ -168,8 +168,6 @@ class IdentityController extends Controller
             }
 
             $identityProtection->status = $identityStatus;
-            $identityProtection->save();
-
             $identityProtection->last_check = Carbon::now();
             $identityProtection->save();
         }
